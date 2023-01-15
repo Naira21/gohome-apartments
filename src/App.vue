@@ -1,17 +1,20 @@
 <template>
   <div :id="$style.app">
     <h2>{{ amountOfClicks() }}</h2>
-    <ButtonVue @click="increment">Click</ButtonVue>
+    <StarRating :rating="4.5" />
   </div>
 </template>
 
 <script>
-import ButtonVue from "./components/Button.vue";
+// import ButtonVue from "./components/Button.vue";
+import StarRating from "./components/StarRating.vue";
 import { ref } from "vue";
+
 export default {
   name: "App",
   components: {
-    ButtonVue,
+    // ButtonVue,
+    StarRating,
   },
   setup() {
     const allClicks = ref(0);
