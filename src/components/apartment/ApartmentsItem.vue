@@ -1,5 +1,5 @@
 <template>
-  <div class="apartments-item">
+  <div class="apartments-item" @click="$emit('click')">
     <div class="apartments-item__inner">
       <!-- <img :src="imgUrl" alt="" class="apartments-item__picture" /> -->
       <div class="apartments-item__content">
@@ -39,7 +39,11 @@ export default {
     },
   },
   setup() {
-    return {};
+    function log(ind, event) {
+      console.log(event);
+      console.log(ind);
+    }
+    return { log };
   },
 };
 </script>
