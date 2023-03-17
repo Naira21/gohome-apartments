@@ -1,6 +1,7 @@
 <template>
   <div :id="$style.app">
     <h2>Text: {{ text }}</h2>
+    <CustomSelect :items="['name', 'label', 'salary']" />
     <CustomInput class="check-style" v-model="text" />
     <ApartmentsList :items="apartments">
       <template v-slot:apartment="{ apartment }">
@@ -23,6 +24,7 @@ import { ref } from "vue";
 import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
 import CustomInput from "./components/shared/CustomInput.vue";
+import CustomSelect from "./components/shared/CustomSelect.vue";
 
 export default {
   name: "App",
@@ -30,6 +32,7 @@ export default {
     ApartmentsList,
     ApartmentsItem,
     CustomInput,
+    CustomSelect,
   },
   setup() {
     // const apartments = [];
