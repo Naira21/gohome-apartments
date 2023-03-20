@@ -1,8 +1,9 @@
 <template>
-  <div :id="$style.app">
-    <h2>Text: {{ text }}</h2>
-    <CustomSelect :items="['name', 'label', 'salary']" />
-    <CustomInput class="check-style" v-model="text" />
+  <div id="app">
+    <h2>{{ text }}</h2>
+    <Container>
+      <ApartmentFilterForm @submit="logger" class="apartments-filter" />
+    </Container>
     <ApartmentsList :items="apartments">
       <template v-slot:apartment="{ apartment }">
         <ApartmentsItem
@@ -11,7 +12,6 @@
           :price="apartment.price"
           :descr="apartment.descr"
           style="background: grey"
-          @click="handleClick"
         />
         <!-- :imgUrl="apartment.imgUrl" -->
       </template>
@@ -23,16 +23,15 @@
 import { ref } from "vue";
 import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
-import CustomInput from "./components/shared/CustomInput.vue";
-import CustomSelect from "./components/shared/CustomSelect.vue";
-
+import ApartmentFilterForm from "./components/apartment/ApartmentFilterForm.vue";
+import Container from "./components/shared/Container.vue";
 export default {
   name: "App",
   components: {
     ApartmentsList,
     ApartmentsItem,
-    CustomInput,
-    CustomSelect,
+    ApartmentFilterForm,
+    Container,
   },
   setup() {
     // const apartments = [];
@@ -81,8 +80,8 @@ export default {
       email: "Tracey.Morar86@hotmail.com",
     });
 
-    function handleClick() {
-      console.log("handleClock");
+    function logger(value) {
+      console.log(value, "from value");
     }
     function onInput() {
       console.log("onInput in App");
@@ -91,7 +90,7 @@ export default {
       text,
       owner,
       apartments,
-      handleClick,
+      logger,
 
       onInput,
     };
@@ -99,7 +98,7 @@ export default {
 };
 </script>
 
-<style module>
+<style lang='scss' scoped >
 #app {
   font-family: Montserrat, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -109,8 +108,7 @@ export default {
   margin-top: 60px;
 }
 
-.check-style {
-  background: red;
-  font-weight: bold;
+.apartments-filter {
+  margin-bottom: 40px;
 }
 </style>

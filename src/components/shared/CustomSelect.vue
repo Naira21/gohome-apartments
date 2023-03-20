@@ -57,5 +57,6 @@ export default {
   padding: 8px 15px;
   cursor: pointer;
   display: inline-block;
+  min-width: 220px;
 }
 </style>

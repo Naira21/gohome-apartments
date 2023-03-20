@@ -54,6 +54,7 @@ export default {
   width: 33.333%;
   padding: 0 15px;
   margin-bottom: 30px;
+
   &__inner {
     position: relative;
   }
