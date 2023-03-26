@@ -36,14 +36,12 @@ export default {
       return {
         ...attrs,
         input: (event) => {
-          console.log(event.target.value);
-
           emit("update:modelValue", event.target.value);
         },
       };
     });
     const handleSubmit = () => {
-      emit("submit", { city: city.value, price: price.value });
+      emit("submit", { city: city, price: price });
     };
     return { price, city, cities, listeners, handleSubmit };
   },

@@ -2,9 +2,10 @@
   <div id="app">
     <h2>{{ text }}</h2>
     <Container>
-      <ApartmentFilterForm @submit="logger" class="apartments-filter" />
+      <ApartmentFilterForm @submit="filter" class="apartments-filter" />
     </Container>
-    <ApartmentsList :items="apartments">
+    <p v-if="!filteredApartments.length">Нічого не знайдено :(</p>
+    <ApartmentsList v-else :items="filteredApartments">
       <template v-slot:apartment="{ apartment }">
         <ApartmentsItem
           :key="apartment.id"
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
 import ApartmentFilterForm from "./components/apartment/ApartmentFilterForm.vue";
@@ -46,7 +47,7 @@ export default {
         price: 2032,
         rating: 5,
         location: {
-          city: "Kherson",
+          city: "Dnipro",
         },
       },
       {
@@ -58,7 +59,7 @@ export default {
         price: 2032,
         rating: 1,
         location: {
-          city: "Kherson",
+          city: "Kiyv",
         },
       },
       {
@@ -70,29 +71,54 @@ export default {
         price: 2032,
         rating: 4.7,
         location: {
-          city: "Kherson",
+          city: "Mykolaiv",
         },
       },
     ]);
-    const owner = ref({
-      name: "Ellen",
-      phone: "115-355-5652",
-      email: "Tracey.Morar86@hotmail.com",
+    // const owner = ref({
+    //   name: "Ellen",
+    //   phone: "115-355-5652",
+    //   email: "Tracey.Morar86@hotmail.com",
+    // });
+    const filters = ref({
+      city: "",
+      price: 0,
     });
+    function filter({ city, price }) {
+      filters.value.city = city;
+      filters.value.price = price;
+    }
 
-    function logger(value) {
-      console.log(value, "from value");
+    function filterByCityName(apartments) {
+      if (!filters.value.city) {
+        return apartments;
+      }
+
+      return apartments.filter((apartment) => {
+        apartment.location.city === filters.value.city;
+      });
     }
-    function onInput() {
-      console.log("onInput in App");
+    function filterByPrice(apartments) {
+      if (!filters.value.price) {
+        return apartments.value;
+      }
+
+      return apartments.value.filter((apartment) => {
+        apartment.price >= filters.value.price;
+      });
     }
+    const filteredApartments = computed(() => {
+      console.log(apartments.value);
+      console.log(filterByPrice(apartments));
+      return filterByCityName(filterByPrice(apartments));
+    });
     return {
       text,
-      owner,
       apartments,
-      logger,
-
-      onInput,
+      filter,
+      filterByCityName,
+      filterByPrice,
+      filteredApartments,
     };
   },
 };
