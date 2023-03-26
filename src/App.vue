@@ -26,6 +26,7 @@ import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
 import ApartmentFilterForm from "./components/apartment/ApartmentFilterForm.vue";
 import Container from "./components/shared/Container.vue";
+
 export default {
   name: "App",
   components: {
@@ -35,8 +36,8 @@ export default {
     Container,
   },
   setup() {
-    // const apartments = [];
     const text = ref("");
+
     const apartments = ref([
       {
         id: "5f05c9dad2c9bc0f773444bc",
@@ -75,15 +76,12 @@ export default {
         },
       },
     ]);
-    // const owner = ref({
-    //   name: "Ellen",
-    //   phone: "115-355-5652",
-    //   email: "Tracey.Morar86@hotmail.com",
-    // });
+
     const filters = ref({
       city: "",
       price: 0,
     });
+
     function filter({ city, price }) {
       filters.value.city = city;
       filters.value.price = price;
@@ -95,23 +93,24 @@ export default {
       }
 
       return apartments.filter((apartment) => {
-        apartment.location.city === filters.value.city;
+        return apartment.location.city === filters.value.city;
       });
     }
+
     function filterByPrice(apartments) {
       if (!filters.value.price) {
         return apartments.value;
       }
 
       return apartments.value.filter((apartment) => {
-        apartment.price >= filters.value.price;
+        return apartment.price >= filters.value.price;
       });
     }
+
     const filteredApartments = computed(() => {
-      console.log(apartments.value);
-      console.log(filterByPrice(apartments));
       return filterByCityName(filterByPrice(apartments));
     });
+
     return {
       text,
       apartments,

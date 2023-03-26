@@ -41,7 +41,7 @@ export default {
       };
     });
     const handleSubmit = () => {
-      emit("submit", { city: city, price: price });
+      emit("submit", { city: city.value, price: price.value });
     };
     return { price, city, cities, listeners, handleSubmit };
   },

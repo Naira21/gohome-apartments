@@ -24,8 +24,6 @@ export default {
       return {
         ...attrs,
         input: (event) => {
-          console.log(event.target.value);
-
           emit("update:modelValue", event.target.value);
         },
       };
