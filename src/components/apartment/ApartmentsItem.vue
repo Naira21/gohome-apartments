@@ -8,6 +8,10 @@
           <StarRating :rating="rating" />
         </div>
         <div class="apartments-item__price">UAN {{ price }}</div>
+        <router-link
+          :to="{ name: 'apartment', params: { id } }"
+          class="apartments-item__link"
+        />
       </div>
     </div>
   </div>
@@ -21,6 +25,10 @@ export default {
     StarRating,
   },
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     descr: {
       type: String,
       default: "",
