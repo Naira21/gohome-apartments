@@ -1,22 +1,29 @@
 <template>
   <div id="app">
-    <h2>{{ text }}</h2>
-    <Container>
-      <ApartmentFilterForm @submit="filter" class="apartments-filter" />
-    </Container>
-    <p v-if="!filteredApartments.length">Нічого не знайдено :(</p>
-    <ApartmentsList v-else :items="filteredApartments">
-      <template v-slot:apartment="{ apartment }">
-        <ApartmentsItem
-          :key="apartment.id"
-          :rating="apartment.rating"
-          :price="apartment.price"
-          :descr="apartment.descr"
-          style="background: grey"
-        />
-        <!-- :imgUrl="apartment.imgUrl" -->
-      </template>
-    </ApartmentsList>
+    <div class="content">
+      <AppHeader />
+      <h2>{{ text }}</h2>
+      <Container>
+        <ApartmentFilterForm @submit="filter" class="apartments-filter" />
+      </Container>
+      <Container>
+        <p v-if="!filteredApartments.length">Нічого не знайдено :(</p>
+
+        <ApartmentsList v-else :items="filteredApartments">
+          <template v-slot:apartment="{ apartment }">
+            <ApartmentsItem
+              :key="apartment.id"
+              :rating="apartment.rating"
+              :price="apartment.price"
+              :descr="apartment.descr"
+              style="background: grey"
+            />
+            <!-- :imgUrl="apartment.imgUrl" -->
+          </template>
+        </ApartmentsList>
+      </Container>
+    </div>
+    <AppFooter />
   </div>
 </template>
 
@@ -26,6 +33,8 @@ import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
 import ApartmentFilterForm from "./components/apartment/ApartmentFilterForm.vue";
 import Container from "./components/shared/Container.vue";
+import AppFooter from "./components/Footer.vue";
+import AppHeader from "./components/Header.vue";
 
 export default {
   name: "App",
@@ -34,6 +43,8 @@ export default {
     ApartmentsItem,
     ApartmentFilterForm,
     Container,
+    AppFooter,
+    AppHeader,
   },
   setup() {
     const text = ref("");
@@ -125,14 +136,18 @@ export default {
 
 <style lang='scss' scoped >
 #app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: Montserrat, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 
+.content {
+  flex-grow: 1;
+  padding-top: 120px;
+}
 .apartments-filter {
   margin-bottom: 40px;
 }
